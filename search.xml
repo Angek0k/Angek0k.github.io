@@ -4,6 +4,31 @@
   
     
     <entry>
+      <title>数据库原理与技术笔记</title>
+      <link href="/2024/11/09/%E6%95%B0%E6%8D%AE%E5%BA%93%E5%8E%9F%E7%90%86%E4%B8%8E%E6%8A%80%E6%9C%AF%E7%AC%94%E8%AE%B0/"/>
+      <url>/2024/11/09/%E6%95%B0%E6%8D%AE%E5%BA%93%E5%8E%9F%E7%90%86%E4%B8%8E%E6%8A%80%E6%9C%AF%E7%AC%94%E8%AE%B0/</url>
+      
+        <content type="html"><![CDATA[<h2 id="数据库原理与技术"><a href="#数据库原理与技术" class="headerlink" title="数据库原理与技术"></a>数据库原理与技术</h2><h4 id="Chapter-1"><a href="#Chapter-1" class="headerlink" title="Chapter 1"></a>Chapter 1</h4><p>什么是数据库：Organized collection of inter-related data that models some aspect of the real world.</p><p>什么是Database management system<span style="color: red;"> (DBMS) </span>：A DBMS is a software package designed to store and manage databases.</p><p>DBS &#x3D; <strong>DB + DBMS +Applications + DBA</strong><span style="color: red;"> (database administrator) </span></p><p><strong>data model</strong> is a collection of concepts and definitions for describing data.</p><p><strong>schema</strong> is a description of a particular collection of data, using a given data model.</p><p align="center">C/S VS. B/S</p><p><img src="https://cdn.jsdelivr.net/gh/Angek0k/myimg@master/20241109183545.png"></p><h4 id="Chapter-2"><a href="#Chapter-2" class="headerlink" title="Chapter 2"></a>Chapter 2</h4><p><strong>Hierarchical data model</strong> <span style="color: red;"> (层次数据模型) </span></p><p> <strong>Primary&#x2F;Child Relationship</strong> 是（主子关系），这种关系描述了层次结构中数据之间的父子关系。在层次模型中，数据通常按层次或<strong>树形结构</strong>组织，其中每个节点（或记录）都有一个父节点和零个或多个子节点。</p><p><img src="https://cdn.jsdelivr.net/gh/Angek0k/myimg@master/20241109185746.png" alt="层次数据模型"></p><p>限制在于层次数据模型难以描述M对N的关系，多父关系，三元关系等</p><p>因此产生了<strong>pointer</strong>（指针）来避免上述出现的情况</p><p><strong>Network data model</strong> <span style="color: red;"> （网络数据模型） </span></p><p>可以用来描述多对多关系，同时是<strong>图结构</strong></p><p><img src="https://cdn.jsdelivr.net/gh/Angek0k/myimg@master/20241109191727.png" alt="网络数据模型中的set和link"></p><p><strong>Relation data model</strong><span style="color: red;"> （关系数据模型） </span></p><p>属性（attribute）、域（domain）、元组（tuple）</p><p>主键：</p><p><strong>唯一性</strong>：主键的值在表中必须是唯一的，每一条记录的主键值都不能重复。</p><p><strong>非空性</strong>：主键字段不能包含 <code>NULL</code> 值。每条记录都必须有一个有效的主键值。</p><p><strong>不可变性</strong>：一旦指定，主键的值通常不应更改，因为它是数据行的唯一标识符。</p><p><strong>单一或组合</strong>：主键可以是一个字段（简单主键），也可以是多个字段的组合（组合主键），这取决于具体的需求。</p><p>候选键：</p><p><strong>唯一性</strong>：候选键必须能够唯一标识每条记录，即候选键的值在表中不会重复。</p><p><strong>非空性</strong>：候选键不能包含 <code>NULL</code> 值，因为它需要保证每一行记录都可以被唯一标识。</p><p><strong>最小性</strong>：候选键应由最少数量的字段组成，不能有多余的字段。也就是说，去掉任何一个字段后，候选键就不再能唯一标识记录。</p><p><strong>独立性</strong>：每个候选键都独立于其他候选键，每个候选键组合都是唯一的、有效的标识。</p><p>候选键与主键的关系：</p><p>在一张表中，可能存在多个候选键（因为多个字段组合都可能唯一标识记录）。</p><p>数据库设计时会从候选键中选择一个作为主键。</p><p>其余未被选为主键的候选键可以称为<strong>备用键（Alternate Key）</strong></p><p>超键：</p><p><strong>唯一性</strong>：超键在表中必须是唯一的，这意味着超键的值组合可以唯一标识每一行记录。</p><p><strong>可能包含多余字段</strong>：超键不要求字段组合是最小的。它可以包含候选键之外的字段，依然能够保证唯一性。</p><p><strong>包含主键</strong>：所有主键都是超键，但不是所有超键都是主键。</p><p><strong>可能包含多个字段</strong>：超键可以由一个字段或多个字段组成。</p><p>超键和候选键的区别：</p><p><strong>超键</strong>可以包含冗余字段，而<strong>候选键</strong>是最小化的字段组合，没有多余字段。</p><p>候选键是所有可能的最小超键集合。</p><p>超键与候选键、主键的关系：</p><p>超键包含了主键和候选键，是更大的集合。</p><p>主键和候选键都是最小超键。</p><p>可以通过剔除超键中多余的字段来生成候选键。</p><p>外键：</p><p><strong>引用性</strong>：外键在一张表中引用另一张表的主键或候选键，形成一种依赖关系。引用的表称为<strong>父表</strong>，包含外键的表称为<strong>子表</strong>。</p><p><strong>数据完整性</strong>：外键可以确保子表中的值在父表中存在，从而维护数据库的完整性和一致性。</p><p><strong>防止孤立数据</strong>：外键关系保证子表中的记录不会引用一个不存在的父记录，避免“孤立”数据的出现。</p><p><strong>可以为空</strong>：在一些情况下，外键字段允许为空值，这表示子表记录可以不关联父表中的某条记录。</p><p><strong>关系代数</strong>：</p><p><img src="https://cdn.jsdelivr.net/gh/Angek0k/myimg@master/20241109234758.png" alt="一些关系代数"></p><p><img src="https://cdn.jsdelivr.net/gh/Angek0k/myimg@master/20241110002641.png"></p><p><img src="https://cdn.jsdelivr.net/gh/Angek0k/myimg@master/20241110002756.png"></p><p>其实就是R中有但是S中没有的</p><p><img src="https://cdn.jsdelivr.net/gh/Angek0k/myimg@master/20241110002833.png"></p><p><img src="https://cdn.jsdelivr.net/gh/Angek0k/myimg@master/20241110002907.png"></p><p>笛卡尔积，就是强行把两个表合并，没有什么多余的操作</p><p><img src="https://cdn.jsdelivr.net/gh/Angek0k/myimg@master/20241110003603.png"></p><p>θ连接，跟内连接的等值连接不一样，可能是大于或者小于</p><p><img src="https://cdn.jsdelivr.net/gh/Angek0k/myimg@master/20241110004615.png"></p><p>自然连接，就是找到具有相同的列然后再连接，先表1再相同列再表2</p><p><img src="https://cdn.jsdelivr.net/gh/Angek0k/myimg@master/20241110010602.png"></p><p><img src="https://cdn.jsdelivr.net/gh/Angek0k/myimg@master/20241110161342.png" alt="外键"></p><p>Relational calculus是关系数据库中的一种查询语言，他主要有两种形式：</p><p><strong>TRC:</strong></p><p>在元组关系演算中，查询结果是基于关系中的元组而定义的。语法形式为 <code>&#123; t | P(t) &#125;</code>，其中 <code>t</code> 是一个元组变量，<code>P(t)</code> 是一个条件，用于描述 <code>t</code> 必须满足的性质。例如，如果我们有一个 <code>Employees</code> 表，我们可以写出 <code>&#123; t | t ∈ Employees ∧ t.Salary &gt; 50000 &#125;</code> 来查询工资大于 50000 的所有员工。</p><p><strong>DRC:</strong></p><p>域关系演算基于属性的域（字段值）进行操作，而不是直接使用元组。语法形式为 <code>&#123; &lt;x1, x2, ..., xn&gt; | P(x1, x2, ..., xn) &#125;</code>，其中 <code>&lt;x1, x2, ..., xn&gt;</code> 表示返回的字段，<code>P(x1, x2, ..., xn)</code> 是条件。例如，对于 <code>Employees</code> 表，如果我们想查询所有工资大于 50000 的员工的名字和工资，可以写成 <code>&#123; &lt;Name, Salary&gt; | (∃t ∈ Employees)(t.Name = Name ∧ t.Salary = Salary ∧ Salary &gt; 50000) &#125;</code>。</p><p><strong>ER data model</strong><span style="color: red;"> （ER数据模型） </span></p><p>Entity: Real-world object distinguishable from other object. An entity is described (in DB) using a set of attributes.</p><p>ER数据模型中的示意图：</p><p><img src="https://cdn.jsdelivr.net/gh/Angek0k/myimg@master/20241110201044.png"></p><p>参与约束：Specify the minimal and max number an entity participates a relationship.</p>]]></content>
+      
+      
+      <categories>
+          
+          <category> homework </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> database </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>论文阅读--Crescendo多轮LLM越狱攻击</title>
       <link href="/2024/11/07/The%20Crescendo%20Multi-Turn%20LLM%20Jailbreak%20Attack/"/>
       <url>/2024/11/07/The%20Crescendo%20Multi-Turn%20LLM%20Jailbreak%20Attack/</url>
